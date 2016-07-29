@@ -1,0 +1,511 @@
+\documentclass{beamer}
+
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{color}
+\setbeamertemplate{caption}[numbered]
+
+
+\mode<presentation>{\usetheme{Warsaw}} %this is the scheme of the presentation: check out others at https://www.hartwork.org/beamer-theme-matrix/
+
+\title{Social Media Button on UncommonGoods}
+\subtitle{Imact On New Account Creation}
+\author{Gene Burinskiy }
+
+\begin{document}
+	\begin{frame}
+		\titlepage
+	\end{frame}
+	
+	\begin{frame}{Outline}
+		
+		\tiny
+		\tableofcontents
+	\end{frame}
+	
+	\section{Intro}
+		\subsection{Questions}
+		\begin{frame}{Questions}
+			\begin{block}{}
+			\begin{itemize}
+				\item How did social login impact the number of account creations on the wishlist login page and on our checkout page?
+				\item How did those features compare across desktop, mobile, and tablet?
+				\item How did Facebook compare to Google as a social login option?
+			\end{itemize}
+			\end{block}
+		\end{frame}	
+	 
+	  \subsection{Method and Setup}
+		\begin{frame}{Method}	
+			\begin{block}{Method}
+				\begin{itemize}
+					\item Implemented Facebook and Google social login buttons
+					\begin{itemize}
+						\item 2 pages: wishlist and checkout
+						\item Implementation occurred in the former 2 weeks of March
+					\end{itemize}
+					\item Compare new account creation to data on 2 weeks prior to implementation
+						\begin{itemize}
+							\item There were 3 period: before, during, and after implementation. For the analysis here, we disregard the after period due to its potentially inconsistent behaviour.
+						\end{itemize}
+					\item Potential issues:
+					\begin{itemize}
+						\item The implementation was not a randomized controlled experiment
+						\item It is difficult to impossible to discriminate between the monthly time trend and the effect of the social buttons
+					\end{itemize}
+				\end{itemize}
+			\end{block}	
+		\end{frame}
+		
+		\section{Wishlist data}
+		\subsection{Visual inspection}
+		\begin{frame}{summary look: aggregated over periods}	
+			\begin{columns}[onlytextwidth]
+				\begin{column}{0.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{Numberofsessionsineachperiod}
+					\end{figure}
+				\end{column}
+				
+				\begin{column}{.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{Numberofnewaccountscreatedineachperiod}
+					\end{figure}
+				\end{column}
+				
+				\begin{column}{0.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{Rateofnewaccountcreationineachperiod}
+					\end{figure}
+				\end{column}
+			\end{columns}
+		\end{frame}
+		
+		\begin{frame}
+			\begin{itemize}
+				\item Before and during implementation periods experienced similar traffic
+				\item The implementation period had fewer sessions
+				\item The number of new accounts created during each period parallels session traffic
+				\item The rate ($\text{rate}_t = \frac{\text{num of new accounts}_t}{\text{num of sessions}_t}$) across each of the periods is similar
+				\item The rate accounts for varying number of visitors across time
+				\item The implementation period had a smaller rate of account creation.
+					\begin{itemize}
+					\item Decreased rate could be due to either a time trend or presence of social buttons -can't tell.
+					\end{itemize}
+			\end{itemize}
+		\end{frame}
+	
+		\begin{frame}{summary look: aggregated over days}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{timeSeries_wl}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days}
+			\begin{itemize}
+				\item First note in the first plot: there is a trend so traffic is systematically different between each period. This confounds the treatment effect and without a full year's data, or otherwise comparable untreated data during the test period, the treatment cannot be discerned from the cyclical effect.
+				
+				\item Illustration: Suppose new account creations are seasonally lower in March. Also suppose that social login buttons do increase the number of new accounts created but not by enough to overcome the seasonal trend. Thus, though they helped we would still see a negative impact of the social buttons because we cannot tell what is seasonality and what is treatment effect
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{daily_timeSeries_wl_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{daily_timeSeries_wl_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{itemize}
+				\item All days are not equal. In all of the above plots, Thursdays seem to receive the most traffic and highest number of account creations. Mondays and Sundays are the close runner ups. 
+				
+				\item The rate of new account creation looks a bit interesting. It seems that for tests, the rate of new account creation peaks on Tuesday instead of Thursday and for both before and test Sundays do almost equally well. Unlike for the number data, the rate seems more volatile.
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over hours in the day}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{hourly_timeSeries_wl_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{hourly_timeSeries_wl_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over hours in the day}
+			\begin{itemize}
+				\item As can be seen in the figures above, for both before and after periods, the number of sessions and number of new accounts track each other quite closely
+				
+				\item The peak of activity seems to be around 14:00 and 15:00 o'clock but it mostly plateaus. It may be possible to divide the day into 2-3 hour blocks
+				
+				\item The rate of new account creation, surprisingly, remains more or less the same regardless of time
+			\end{itemize}
+		\end{frame}		
+
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{itemize}
+				\item All days are not equal. In all of the above plots, Thursdays seem to receive the most traffic and highest number of account creations. Mondays and Sundays are the close runner ups. 
+				
+				\item The rate of new account creation looks a bit interesting. It seems that for tests, the rate of new account creation peaks on Tuesday instead of Thursday and for both before and test Sundays do almost equally well. Unlike for the number data, the rate seems more volatile.
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: device type}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{device_wl_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{device_wl_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: device type}
+			\begin{itemize}
+				\item The most used platform is desktop, followed by mobile and tablet. 
+				
+				\item The only platform on which the number of sessions, number of new accounts, and rate increased under treatment is the tablet.
+				
+				\item There doesn't seem to be much variation, patterns hold across platforms.
+			\end{itemize}
+		\end{frame}			
+		
+		\begin{frame}{summary look: number of interactions with the website}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{event_counts_wl}
+			\end{figure}
+
+		\end{frame}
+		
+		\begin{frame}{summary look: number of interactions with the website}
+			\begin{itemize}
+				\item It seems that people who interact minimally with the site are not inclined to create an account, as indicated by the Rate plot.
+				\item People who interact a lot with the site are highly inclined to create a new account.
+				\item People who interact an intermediate number of times more often than not create accounts.
+			\end{itemize}
+		\end{frame}
+		
+		\subsection{Statistical Results}
+			\subsubsection{Setup}
+			\begin{frame}{Setup}
+			\begin{block}{The models: numerous perspectives}
+				\begin{enumerate}
+					\item Impact on probability of user creating a new account 
+					\item Impact on number of new accounts created per hour
+					\item Impact on rate of new accounts created per hour
+				\end{enumerate}
+			\end{block}		
+			\end{frame}
+			
+			\begin{frame}{Setup}
+			\begin{block}{Things we control for}
+				\small
+				\begin{itemize}
+					\item hour of the day
+					\item day of the week
+					\item period: before or during implementation -this attempts to capture the seasonal trends
+					\item device
+					\item number of interactions with the website
+					\item the social media buttons (treatment)
+					\item whether the user tried to login first
+					\item whether the user has visited the website before
+					\item whether the user tried to login multiple times
+				\end{itemize}
+			\end{block}
+			\tiny
+			\textbf{Caveat:} Interpretation of models assumes that we managed to capture the seasonal trend!
+			\end{frame}
+			
+			\subsubsection{Results}
+			\begin{frame}{Impact on probability of creating a new account}
+				Full the full regression output tables, please see the source Notebook.
+					\begin{block}{OLS Partial Results}
+						\begin{itemize}
+							\item Both Facebook and Google social login buttons on the Desktop positively impact the chance of creating an account
+							\item Google button seems more effective than Facebook button in creating an account on a Desktop
+							\item People are not more likely to create an account on a Tablet using social media buttons than on Desktop
+							\item Social media login on a Mobile devices are less likely to create an account than they are on a Desktop
+							\item People are less likely to create an account on Mobile and Tablet devices than they are on a Desktop
+						\end{itemize}
+					\end{block}
+			\end{frame}
+			\begin{frame}{Impact on probability of creating a new account}		
+					\begin{block}{Logit Partial Results}
+						Note: this is the more canonical model for this type of data. 
+						\begin{itemize}
+							\item All of the conclusions above hold in this model too
+							\item People using Tablets are, in general, less likely to create an account than on a Desktop
+						\end{itemize}
+					\end{block}
+					The similarity in outcomes between the two models suggests robustness of results.
+			\end{frame}
+			
+			\begin{frame}{Impact on count of new counts per hour}
+				\begin{block}{Poisson Partial Results}
+					\begin{itemize}
+						\item In this model, only the Google social login button positively impacts the number of new accounts per hours creation on a Desktop
+						\item In this model, the hourly account creation on Mobile and Tablet devices does not differ significantly from the Desktop. Same is true when social media login buttons are considered
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			
+			\begin{frame}{Impact on rate of new counts created per hour}
+				\begin{block}{OLS and Poisson Partial Results}
+					\begin{itemize}
+						\item The same results that held in the hourly count data hold here. 
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			
+			\begin{frame}{Conclusion on Wishlist page}
+				\begin{block}{Conclusions and further steps}
+					\begin{itemize}
+						\item If we regard only the results that hold across all of the models then only the Google social media button positively affects new account creation
+						\item The results regarding user behaviour are consistent with expectations suggesting that our models are credible at least in that aspect
+						\item Results for parameters of interest are not consistent
+						\item We could benefit from running a proper randomized controlled experiment by only presenting some users with the social media login option. Also, a longer testing period may be proper
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			
+	\section{Checkout Page}
+		\subsection{Visual inspection}
+		\begin{frame}{summary look: aggregated over periods}	
+			\begin{columns}[onlytextwidth]
+				\begin{column}{0.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{numberofsessionsineachperiod_co}
+					\end{figure}
+				\end{column}
+				
+				\begin{column}{.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{numberofnewaccountscreatedineachperiod_co}
+					\end{figure}
+				\end{column}
+				
+				\begin{column}{0.3\textwidth}
+					\begin{figure}[H]
+						\centering
+						\includegraphics[height=2.8cm]{rateofnewaccountcreationineachperiod_co}
+					\end{figure}
+				\end{column}
+			\end{columns}
+		\end{frame}
+		
+		\begin{frame}
+			\begin{itemize}
+				\item The number of sessions during the implementation period was larger
+				\item The number of new accounts during the implementation period was almost half of new accounts before implementation
+				\item The above suggests that either social login buttons were detrimental to account creation
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{period_aggr_co}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days}
+			\begin{itemize}
+				\item The checkout page does not seem to experience the downward trend in sessions during the available data range
+				\item The number of new accounts seems substantially smaller during the testing phase
+				\item Discontinuity between the three periods. The fact that the post-implementation phase has more accounts created than implementation period point to detrimental affect of social login buttons
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{daily_aggr_co_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{daily_aggr_co_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{itemize}
+				\item The same day of the week patterns hold as on the wishlist page except on the checkout page they are not as drastic
+				\item The discord of the post-implementation data with the other two trends suggests the after period is too short to reflect the same trends
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over hours in the day}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{hourly_aggr_co_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{hourly_aggr_co_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: aggregated over hours in the day}
+			\begin{itemize}
+				\item As can be seen in the figures above, for both before and after periods, the number of sessions and number of new accounts track each other quite closely
+				
+				\item The peak of activity seems to be around 12:00 and 15:00 o'clock
+				
+				\item The rate of new account creation, surprisingly, remains more or less the same regardless of time, especially during the implementation period.
+			\end{itemize}
+		\end{frame}		
+		
+		\begin{frame}{summary look: aggregated over days of the week}
+			\begin{itemize}
+				\item All days are not equal. In all of the above plots, Thursdays seem to receive the most traffic and highest number of account creations. Mondays and Sundays are the close runner ups. 
+				
+				\item The rate of new account creation looks a bit interesting. It seems that for tests, the rate of new account creation peaks on Tuesday instead of Thursday and for both before and test Sundays do almost equally well. Unlike for the number data, the rate seems more volatile.
+			\end{itemize}
+		\end{frame}
+		
+		\begin{frame}{summary look: device type}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{device_aggr_co_1}
+			\end{figure}
+			
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=5cm]{device_aggr_co_2}
+			\end{figure}
+		\end{frame}
+		
+		\begin{frame}{summary look: device type}
+			\begin{itemize}
+				\item The most used platform is desktop, followed by mobile and tablet. 
+				
+				\item The testing period saw a similar rate of new account creation across the three devices while for the other period, the differences are more pronounced across devices.
+			\end{itemize}
+		\end{frame}			
+		
+		\begin{frame}{summary look: number of interactions with the website}
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=10cm]{event_count_co}
+			\end{figure}
+			
+		\end{frame}
+		
+		\begin{frame}{summary look: number of interactions with the website}
+			\begin{itemize}
+				\item People interact a lot less on the checkout page as expected
+				\item There are a few people who interact an abnormally large amount of times after hitting the checkout page
+				\item Again, people who interact more seem to be more likely to create accounts
+			\end{itemize}
+		\end{frame}
+		
+		
+		%-----------------------------------------
+		\subsection{Statistical Results}
+			\subsubsection{Setup}
+			\begin{frame}{Setup}
+				\begin{block}{The models: numerous perspectives}
+					\begin{enumerate}
+						\item Impact on probability of user creating a new account 
+						\item Impact on number of new accounts created per hour
+						\item Impact on rate of new accounts created per hour
+					\end{enumerate}
+				\end{block}		
+			\end{frame}
+			
+			\begin{frame}{Setup}
+				\begin{block}{Things we control for}
+					\small
+					\begin{itemize}
+						\item hour of the day
+						\item day of the week
+						\item period: before or during implementation -this attempts to capture the seasonal trends
+						\item device
+						\item number of interactions with the website
+						\item the social media buttons (treatment)
+						\item whether the user tried to login first
+						\item whether the user has visited the website before
+						\item whether the user tried to login multiple times
+					\end{itemize}
+				\end{block}
+				\tiny
+			\end{frame}
+			
+			\subsubsection{Results}
+			\begin{frame}{Impact on probability of creating a new account}
+				Full the full regression output tables, please see the source Notebook.
+				\begin{block}{OLS Partial Results}
+					\begin{itemize}
+						\item Both Facebook and Google social login buttons on the Desktop positively impact the chance of creating an account
+						\item Google button seems slightly more effective than Facebook button in creating an account on a Desktop though not in a statistically significant way
+						\item Users are more likely to create an account using the Facebook social login button on a tablet than on desktop
+						\item People are less likely to create an account on Mobile and Tablet devices than they are on a Desktop
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			\begin{frame}{Impact on probability of creating a new account}		
+				\begin{block}{Logit Partial Results}
+					Note: this is the more canonical model for this type of data. 
+					\begin{itemize}
+						\item All but one conclusion doesn't hold in this model as above
+						\item People are not more likely to create a new account on using Facebook on a Tablet.
+					\end{itemize}
+				\end{block}
+				The similarity in outcomes between the two models suggests robustness of results.
+			\end{frame}
+			
+			\begin{frame}{Impact on count of new accounts per hour}
+				\begin{block}{OLS Partial Results}
+					\begin{itemize}
+						\item Only Google seems to positively impact the hourly count of new account creations
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			
+			\begin{frame}{Impact on rate of new counts created per hour}
+				\begin{block}{OLS and Poisson Partial Results}
+					\begin{itemize}
+						\item The same results that held in the hourly count data hold here. 
+					\end{itemize}
+				\end{block}
+			\end{frame}
+			
+			\begin{frame}{Conclusion on Checkout page}
+				\begin{block}{Conclusions and further steps}
+					\begin{itemize}
+						\item If we regard only the results that hold across all of the models then only the Google social media button positively affects new account creation
+						\item The results regarding user behaviour are consistent with expectations suggesting that our models are credible -at least in that aspect
+						\item Results for parameters of interest are not consistent across models which suggest we shouldn't take the results too seriously
+						\item We could benefit from running a proper randomized controlled experiment by only presenting some users with the social media login option.
+					\end{itemize}
+				\end{block}
+			\end{frame}			
+\end{document}
